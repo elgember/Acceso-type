@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    .light {
+        @apply bg-white text-black;
+    }
+    
+    .dark {
+        @apply bg-amber-950 text-white;
+    }
+}

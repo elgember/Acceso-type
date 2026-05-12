@@ -2,13 +2,19 @@ type UserRole = 'admin' | 'guest' | 'editor';
 
 export interface BaseUser {
     id: number;
-    name: string;
+    username: string;
     role: UserRole;
+    login: string;
+    avatar_url: string;
+    html_url: string;
+    type: string;
+    email: string;
 }
 
 export interface AdminUser extends BaseUser {
     role: 'admin';
     backendAccess: boolean;
+    permissions: string[];
 }
 
 export interface GuestUser extends BaseUser {

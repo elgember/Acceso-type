@@ -1,15 +1,19 @@
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeContextProvider } from "./Context/ThemeContext";
-import { Dashboard } from "./Views/Dashboard";
+import { AppRoutes } from "./Routes/AppRoutes";
+import { SearchContextProvider } from "./Context/SearchContext";
 
 
 function App() {
 
-    return (
-        <div>
+    return (   
             <ThemeContextProvider> 
-                <Dashboard />
+                <SearchContextProvider>
+                    <Router>
+                        <AppRoutes />
+                    </Router>
+                </SearchContextProvider>
             </ThemeContextProvider>
-        </div>
     );
 }
 

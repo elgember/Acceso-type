@@ -1,5 +1,5 @@
-import { Card } from "@/Components/Ui/Card"
-import { ThemeToggle } from "@/Components/Ui/ThemeToggle"
+import { Card } from "@/Components/Ui/Card";
+import { ThemeToggle } from "@/Components/Ui/ThemeToggle";
 
 export const Dashboard = () => {
     return (

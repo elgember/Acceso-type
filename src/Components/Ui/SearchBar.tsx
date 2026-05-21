@@ -9,7 +9,7 @@ export const SearchBar = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        search(val);
+        search(val.toLocaleLowerCase().trim());
     }
 
     return (

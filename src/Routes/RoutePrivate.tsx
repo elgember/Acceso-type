@@ -12,8 +12,8 @@ export const RoutePrivate = ({ user, requiredAdmin = false }: RoutePrivateProps)
         return <Navigate to="/login" />;
     }
 
-    if (requiredAdmin && !isAdmin(user)) {
-        return <Navigate to="/" />;
+    if (requiredAdmin && user.role !== 'admin') {
+        return <Navigate to="/" replace />;
     }
 
     return <Outlet />;

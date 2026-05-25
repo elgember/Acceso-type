@@ -1,9 +1,13 @@
 import { authContext } from "@/Context/AuthContext";
 import { User } from "@/interfaces/user_interface";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
 
     const {login} = authContext();
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
 
     const loginAdmin = () => {
         const token = 'ehh17366ebdbh722933g4h4h72h';
@@ -57,6 +61,8 @@ export const Login = () => {
         }
 
         login(token, editorData);
+
+
     }
 
     return (

@@ -9,6 +9,10 @@ export interface BaseUser {
     html_url: string;
     type: string;
     email: string;
+    permissions?: string[];
+    backendAccess?: boolean;
+    trialPeriod?: number;
+    canEdit?: boolean;
 }
 
 export interface AdminUser extends BaseUser {

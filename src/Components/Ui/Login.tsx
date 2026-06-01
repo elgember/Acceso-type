@@ -24,6 +24,7 @@ export const Login = () => {
             type: 'User',
             email: 'alice.dev@example.com'
         } 
+        
         login (token, adminData);
     }
 
@@ -61,21 +62,21 @@ export const Login = () => {
         }
 
         login(token, editorData);
-
-
     }
 
     return (
-    <div>
-        <h3>Iniciar Como</h3>
-        <div>
-            <button onClick={loginAdmin}>Iniciar como Admin</button>
-        </div>
-        <div>
-            <button onClick={loginGuest}>Iniciar como Guest</button>
-        </div>
-        <div>
-            <button onClick={loginEditor}>Iniciar como Editor</button>
+    <div className="mt-4">
+        <h3 className="p-2 text-center">Iniciar Sesion</h3>
+        <div className="flex justify-center gap-2">
+            <div>
+                <button className="w-40 bg-red-500 py-1 rounded" onClick={loginAdmin}>Iniciar como Admin</button>
+            </div>
+            <div>
+                <button className="w-40 bg-[#48e] py-1 rounded" onClick={loginGuest}>Iniciar como Guest</button>
+            </div>
+            <div>
+                <button className="w-40 bg-green-500 py-1 rounded" onClick={loginEditor}>Iniciar como Editor</button>
+            </div>
         </div>
     </div>
     )

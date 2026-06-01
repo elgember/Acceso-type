@@ -3,6 +3,7 @@ import { ThemeContextProvider } from "./Context/ThemeContext";
 import { AppRoutes } from "./Routes/AppRoutes";
 import { SearchContextProvider } from "./Context/SearchContext";
 import { UserAuth } from "./Hooks/UserAuth";
+import { AuthContextProvider } from "./Context/AuthContext";
 
 
 function App() {
@@ -11,9 +12,11 @@ function App() {
             <ThemeContextProvider> 
                 <SearchContextProvider>
                     <UserAuth>
-                        <Router>
-                            <AppRoutes />
-                        </Router>
+                        <AuthContextProvider>
+                            <Router>
+                                <AppRoutes />
+                            </Router>
+                        </AuthContextProvider>
                     </UserAuth>
                 </SearchContextProvider>
             </ThemeContextProvider>

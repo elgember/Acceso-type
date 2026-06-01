@@ -5,7 +5,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext<AuthTypes | undefined>(undefined);
 
 export const UserAuth: React.FC<{ children: React.ReactNode }> = ({children}) => {
-
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {

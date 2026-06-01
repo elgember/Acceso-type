@@ -2,10 +2,14 @@ import { isAdmin } from '@/utils/TypeGuads';
 import { User } from '@/interfaces/user_interface';
 
 interface CardPros {
-    user: User;
+    user: User | null | undefined;
 }
 
 export const Card = ({ user }: CardPros) => {
+    if (!user) {
+        return <div>Usuario no encontrado</div>
+    }
+
     return (
     <div className='dark:text-white'>
         <p>Usuario: {user.username}</p>

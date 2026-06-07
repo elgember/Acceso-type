@@ -13,6 +13,9 @@ export const useFetchUsers = () => {
             try {
                 const data = await fetchUsers();
                 setUsers(data);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 2000); // Simulate loading delay
             } catch (error) {
                 console.error('Error fetching users:', error);
             } finally {

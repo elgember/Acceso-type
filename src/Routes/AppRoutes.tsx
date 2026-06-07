@@ -37,7 +37,7 @@ export const AppRoutes = () => {
                 <Route element={<RoutePrivate user={user} requiredAdmin={true}/> }>
                     <Route element={<Layout />}>
                         <Route path="admin" element={<AdminPanel />} />
-                        <Route path="profileAdmin/:id" element={<ProfileDetalle /> } />
+                        <Route path="profileDetalle/:id" element={<ProfileDetalle /> } />
                     </Route>
                 </Route>
                     <Route path="*" element={<NotFound />} /> 

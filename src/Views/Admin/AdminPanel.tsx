@@ -80,7 +80,7 @@ export const AdminPanel = () => {
                     <table className='min-w-3xl w-full table-auto text-left border-collapse text-sm'>
                         <thead>
                             <tr className='border-b border-slate-100 dark:border-slate-800-700 bg-slate-50 dark:bg-gray-800 dark:text-slate-400'>
-                                <th className='px-6 py-3 font-semibold' onClick={() => setSortOder(sortOder === 'asc' ? 'desc' : 'asc')}>Name</th>
+                                <th className='px-6 py-3 font-semibold cursor-pointer' onClick={() => setSortOder(sortOder === 'asc' ? 'desc' : 'asc')}>Name</th>
                                 <th className='px-6 py-3 font-semibold'>Email</th>
                                 <th className='px-6 py-3 font-semibold'>Role</th>
                                 <th className='px-6 py-3 font-semibold'>Status</th>

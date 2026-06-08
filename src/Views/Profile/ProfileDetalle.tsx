@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useFetchUsers } from "@/Hooks/useFethUsers";
+import {VolverToPanel} from '@/Components/Ui/VolverToPanel';
+
 
 export const ProfileDetalle = () => {
     // Obtener el ID del usuario desde los parámetros de la URL
@@ -19,13 +21,19 @@ const user = users.find(u => u.id === Number(id)); // Obtener el usuario desde l
 
     return (
     <div className="p-2">
-        <h1 className="text-center p-2">Detalle del Usuario</h1>
-        <ul>
-            <li>Nombre: {user.name}</li>
-            <li>Email: {user.email}</li>
-            <li>Rol: {user.role}</li>
-            <li>@{user.username}</li>
-        </ul>
+        <VolverToPanel />
+        <div>
+            <h1 className="text-center p-2">Detalle del Usuario</h1>
+        </div>
+        <div>
+            <ul>
+                <li>Nombre: {user.name}</li>
+                <li>Email: {user.email}</li>
+                <li>Rol: {user.role}</li>
+                <li>@{user.username}</li>
+                <li>{user.name.charAt(0)}</li>
+            </ul>
+        </div>
     </div>
     )
 }

@@ -3,6 +3,7 @@ import { User } from '@/interfaces/user_interface';
 
 interface CardPros {
     user: User | null | undefined;
+
 }
 
 export const Card = ({ user }: CardPros) => {
@@ -15,7 +16,7 @@ export const Card = ({ user }: CardPros) => {
         <p>Usuario: {user.username}</p>
         {isAdmin(user) ? (
             <div>
-                <span>Nivel de acceso: {user.permissions.join(', ')}</span>
+                <span>Nivel de acceso: {user.permissions?.join(', ')}</span>
             </div>
         ) : (
             <div>

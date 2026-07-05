@@ -10,7 +10,7 @@ export const ConfirmationModal = ({isOpen, onConfirmar, onCancelar }: confimatio
     if (!isOpen) return null;
     
     return (
-    <div className="z-20 bg-[#49f] py-8 rounded-lg w-full">
+    <div className="z-20 bg-[#49f] py-10 rounded-lg w-lg md:max-w-3xl">
         <div>
             <p className="text-center text-white">Are you sure you want to delete this user ?</p>
             <div className="flex justify-center gap-4 mt-4">

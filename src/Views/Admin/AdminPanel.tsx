@@ -1,5 +1,5 @@
 import { useFetchUsers } from '@/Hooks/useFethUsers';
-import type {User, UserRole } from '@/interfaces/user_interface';
+import type {   User, UserRole } from '@/interfaces/user_interface';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,11 +11,13 @@ import { CurrentPages } from '@/Components/CurrentPages';
 import { UsersRole } from '@/Components/Ui/UsersRole';
 import { UserTableSkeleton } from '@/Components/UserTableSkeleton';
 import { userUsersManager } from '@/Hooks/userUsersManager';
+import { supabase } from '@/superbaseCliente';
+
 
 export const AdminPanel = () => {
-    const { loading, users } = useFetchUsers();
+    const { users } = useFetchUsers();
 
-    const { setUsers, searchTerm, setSearchTerm, sortOrder, setSortOrder, filterRole, setFilterRole, formData, setFormData, currentPage, setCurrentPage, currentUser, totalPage, filteredUsers } = userUsersManager(users);
+    const { setUsers, loading, searchTerm, setSearchTerm, sortOrder, setSortOrder, filterRole, setFilterRole, currentPage, setCurrentPage, currentUser, totalPage, filteredUsers } = userUsersManager();
 
     const location = useLocation();
 
@@ -29,25 +31,36 @@ export const AdminPanel = () => {
     const [isDeleteModal, setIsDeleteModal] = useState(false);
 
     // State to hold the ID of the user to be deleted
-    const [userToDelete, setUserToDelete] = useState<number | null>(null);
+    const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
 
     // eliminar usuarios de la table 
-    const handleDeleteClick = (id: number) => {
-        setUserToDelete(id);
+    const handleDeleteClick = (user: User) => {
+        setUserToDelete(user);
         setIsDeleteModal(true);
     }
-        const confirmarDelete = () => {
+        const confirmarDelete = async () => {
             if (userToDelete !== null) {
-                setUsers(prevUsers => prevUsers.filter(user => user.id !== userToDelete));
-                setIsDeleteModal(false);
-                setUserToDelete(null);
+                const { error } = await supabase
+                    .from('users')
+                    .delete()
+                    .eq('id', userToDelete.id);
+
+                if (!error) {
+                    setUsers(prevUsers => prevUsers.filter(user => user.id !== userToDelete.id));
+                }
+
                 setNotification('Usuaraio Eliminado');
                 setTimeout(() => {
                     setNotification(null);
                 }, 3000);
+            } else {
+                console.error('No se pudo eliminar el usuario: ID no encontrado');
             }
+            setIsDeleteModal(false);
+            setUserToDelete(null);
         }
+        
         const cancelarDelete = () => {
             setIsDeleteModal(false);
             setUserToDelete(null);
@@ -55,37 +68,59 @@ export const AdminPanel = () => {
 
     // agregar usuario en la table 
     const handleAddClick = () => {
-        setFormData({ name: '', email: '', role: 'guest' as UserRole });
+        setUserToDelete(null);
         setIsFormModalOpen(true);
     }
 
     const handleEditClick = (user: User) => {
-        setFormData(user); //cargar los datos de usuario
+        setUserToDelete(user);
         setIsFormModalOpen(true);
     }
 
         // guardar o crear usuario en la tabla si hay id
-        const handleSeveUser = (data: UserFormData) => {
-            
-            if(formData.id) {
-                setUsers(prevUsers => 
-                    prevUsers.map(u => (u.id === formData.id ? { ...u, ...data } as User : u))
-                );
-            } else {
-                const userToCreate: User = {
-                    id: Date.now(),
+    const handleSeveUser = async (data: UserFormData) => {
+        
+        if (userToDelete) {
+            const { error } = await supabase
+                .from('users')
+                .update({
                     name: data.name,
-                    email: data.email || '',
-                    username: data.name.toLowerCase().replace(/\s/g, '_'),
-                    role: (data.role as UserRole) || 'guest',
-                };
-                setUsers(prevUser => [userToCreate, ...prevUser]);
+                    email: data.email,
+                    role: data.role
+                })
+                .eq('id', userToDelete.id);
+
+            if (!error) {
+                setUsers(prev => prev.map(user => user.id === userToDelete.id ? { ...user, ...data } : user));
+            } else {
+               console.error('Error al actualizar usuario:', error.message);
+        }
+            } else {
+                const generatedId = data.name.toLowerCase().replace(/\s+/g, '-');
+
+                const { data: newUser, error } = await supabase
+                    .from('users')
+                    .insert([{ 
+                        name: data.name,
+                        email: data.email,
+                        role: data.role
+                    }])
+                    .select()
+                    .single();
+                    
+                if (!error && newUser) {
+                    setUsers(prev => [newUser as User, ...prev ]);
+                } else {
+                    console.error('Error al crear usuario:', error?.message);
+                }
             }
             setIsFormModalOpen(false);
+            setUserToDelete(null);
         }
 
         const handleCancelUser = () => {
             setIsFormModalOpen(false);
+            setUserToDelete(null);
         }
 
 
@@ -116,7 +151,7 @@ export const AdminPanel = () => {
             </div>
             {/* modal to create or edit a user */}
             <div className='absolute top-1/3 z-50 w-full flex justify-center p-4'>
-                <UserFormModal isOpen={isFormModalOpen} userToEdit={formData.id ? (formData as User) : null} saveUser={handleSeveUser} cancelUser={handleCancelUser} />
+                <UserFormModal isOpen={isFormModalOpen} userToEdit={userToDelete} saveUser={handleSeveUser} cancelUser={handleCancelUser} />
             </div>
             <div className='w-full flex justify-center'>
                 <AnimatePresence>

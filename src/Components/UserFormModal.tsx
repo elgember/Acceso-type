@@ -53,8 +53,8 @@ export const UserFormModal = ({  isOpen, cancelUser, userToEdit, saveUser }: mod
                 <h2 className="text-center text-white dark:text-slate-400">
                     {userToEdit ? 'Editar usuario' : 'Crear usuario'}
                 </h2>
-                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('name')} />
-                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('email')} />
+                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('name')} placeholder="Nombre completo" />
+                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('email')} placeholder="Correo electrónico" />
                 <div>
                     <select className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" id="" {...register('role')}>
                         <option value="admin">Admin</option>

@@ -1,11 +1,14 @@
 
-import type { User, UserRole } from "@/interfaces/user_interface"
-import { useEffect, useState } from "react"
+import type { User, UserRole } from "@/interfaces/user_interface";
+import { useEffect, useState } from "react";
+import { supabase } from "@/superbaseCliente";
 
-export const userUsersManager = (initialUsers: User[]) => {
+export const userUsersManager = () => {
 
     // State to hold the list of users
-    const [users, setUsers] = useState<User[]>(initialUsers);
+    const [users, setUsers] = useState<User[]>([]);
+
+    const [loading, setLoading] = useState(true);
 
     // State to hold the current search term entered by the user
     const [searchTerm, setSearchTerm] = useState('');
@@ -19,17 +22,29 @@ export const userUsersManager = (initialUsers: User[]) => {
     // State to hold the debounced search term, which is updated after a delay to avoid excessive filtering while the user is typing
     const [debouncedSearch, setDebouncedSearch] = useState('');
 
-    //modal to edit user
-    const [formData, setFormData] = useState<Partial<User>>({ name: '', email: '', role: 'guest' });
-
     const [currentPage, setCurrentPage] = useState(1);
 
     const usersPage = 5;
 
+    const fetchUsers = async () => {
+        setLoading(true);
+
+        const { data, error } = await supabase
+            .from('users')
+            .select('*');
+
+        if (error) {
+            console.error('Error al descargar usuarios:', error.message);
+        } else if (data) {
+            setUsers(data as User[]);
+        }
+        setLoading(false);
+    }
+
     // sicronisa datos de usuarios
     useEffect(() => {
-        setUsers(initialUsers);
-    }, [initialUsers]);
+        fetchUsers();   
+    }, []);
 
     //tiempo de respuesta de busqueda
     useEffect(() => {
@@ -70,14 +85,13 @@ export const userUsersManager = (initialUsers: User[]) => {
         setFilterRole,
         debouncedSearch,
         setDebouncedSearch,
-        formData,
-        setFormData,
         currentPage,
         setCurrentPage,
         usersPage,
         currentUser,
         totalPage, 
         filteredUsers,
+        loading,
         setUsers
     };
 }

@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@iconify/react": "^6.0.2",
+    "@supabase/supabase-js": "^2.110.0",
     "@tailwindcss/vite": "^4.2.4",
     "framer-motion": "^12.40.0",
     "react": "^19.2.5",

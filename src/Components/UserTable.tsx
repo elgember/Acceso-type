@@ -6,7 +6,7 @@ interface props {
     users: User[];
     onSortToggle: () => void;
     handleEditClick: (user: User) => void;
-    handleDeleteClick: (id: number) => void;
+    handleDeleteClick: (user: User) => void;
 }
 
 export const UserTable = ({users, sortOrder, onSortToggle, handleEditClick, handleDeleteClick }: props) => {
@@ -46,7 +46,7 @@ export const UserTable = ({users, sortOrder, onSortToggle, handleEditClick, hand
                                 </Link>
                             </td>
                             <td className="px-6 py-4 text-center">
-                                <button className="cursor-pointer" onClick={() => handleDeleteClick(user.id)}>Eliminar</button>
+                                <button className="cursor-pointer" onClick={() => handleDeleteClick(user)}>Eliminar</button>
                             </td>
                     </tr>
                     ))}

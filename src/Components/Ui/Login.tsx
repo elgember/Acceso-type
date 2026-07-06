@@ -14,6 +14,7 @@ export const Login = () => {
 
         const adminData: User = {
             id: 1,
+            name: 'Alice Dev',
             username: 'Alice Dev',
             role: 'admin',
             backendAccess: true,
@@ -33,6 +34,7 @@ export const Login = () => {
 
         const guestData: User = {
             id: 2,
+            name: 'Bob guest',                                  
             username: 'Bob guest',
             role: 'guest',
             trialPeriod: 30,
@@ -51,6 +53,7 @@ export const Login = () => {
 
         const editorData: User = {
             id: 3,
+            name: 'Charlie Editor',
             username: 'Charlie Editor',
             role: 'editor',
             canEdit: true,

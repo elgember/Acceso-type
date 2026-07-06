@@ -20,7 +20,7 @@ export const SearchBar = () => {
                 {!loading && results.length > 0 && (
                     <div>
                         {results.map((users) => (
-                            <UserCard key={users.id} users={users} />
+                            <UserCard key={users.id} user={users} />
                         ))}
                     </div>
                 )}

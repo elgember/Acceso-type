@@ -1,5 +1,5 @@
 import { useFetchUsers } from '@/Hooks/useFethUsers';
-import type {   User, UserRole } from '@/interfaces/user_interface';
+import type { User } from '@/interfaces/user_interface';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';

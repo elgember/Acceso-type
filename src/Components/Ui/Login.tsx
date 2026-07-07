@@ -68,9 +68,9 @@ export const Login = () => {
     }
 
     return (
-    <div className="mt-4">
+    <div className="mt-4 w-full">
         <h3 className="p-2 text-center">Iniciar Sesion</h3>
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-2 w-full px-2">
             <div>
                 <button className="w-40 bg-red-500 py-1 rounded" onClick={loginAdmin}>Iniciar como Admin</button>
             </div>

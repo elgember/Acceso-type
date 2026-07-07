@@ -150,7 +150,7 @@ export const AdminPanel = () => {
                 <ConfirmationModal isOpen={isDeleteModal} onConfirmar={confirmarDelete} onCancelar={cancelarDelete} />
             </div>
             {/* modal to create or edit a user */}
-            <div className='absolute top-1/3 z-50 w-full flex justify-center p-4'>
+            <div className='absolute top-1/5 z-50 w-full flex justify-center p-4'>
                 <UserFormModal isOpen={isFormModalOpen} userToEdit={userToDelete} saveUser={handleSeveUser} cancelUser={handleCancelUser} />
             </div>
             <div className='w-full flex justify-center'>

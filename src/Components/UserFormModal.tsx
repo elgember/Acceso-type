@@ -47,25 +47,27 @@ export const UserFormModal = ({  isOpen, cancelUser, userToEdit, saveUser }: mod
     }
     
     return (
-    <div className="bg-[#49f] dark:bg-slate-800 max-w-3xl w-full rounded-lg p-3">
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-4 p-2">
-                <h2 className="text-center text-white dark:text-slate-400">
+    <div className="bg-[#49f] dark:bg-slate-800 max-w-3xl w-full sm:w-full rounded-lg p-3">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full flex flex-col">
+            <div className="flex flex-col gap-4 h-full">
+                <h2 className="text-center text-white dark:text-slate-400 pt-2">
                     {userToEdit ? 'Editar usuario' : 'Crear usuario'}
                 </h2>
-                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('name')} placeholder="Nombre completo" />
-                <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" type="text" {...register('email')} placeholder="Correo electrónico" />
+                
+                    <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-2 pl-2 rounded" type="text" {...register('name')} placeholder="Nombre completo" />
+                    <input className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-2 pl-2 rounded" type="text" {...register('email')} placeholder="Correo electrónico" />
+                
                 <div>
-                    <select className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-1 pl-2 rounded" id="" {...register('role')}>
+                    <select className="w-full bg-[#eee] dark:bg-slate-500 text-black dark:text-slate-300 py-2 pl-2 rounded" id="" {...register('role')}>
                         <option value="admin">Admin</option>
                         <option value="editor">Editor</option>
                         <option value="guest">Guest</option>
                     </select>
                 </div>
-            </div>
-            <div className="flex gap-4 justify-center py-3">
-                <button className="bg-white dark:bg-slate-500 dark:text-slate-300 w-30 py-1 rounded cursor-pointer" type="button" onClick={cancelUser}>Cancelar</button>
-                <button className="bg-white dark:bg-slate-500 dark:text-slate-300 w-30 py-1 rounded cursor-pointer" type="submit">{userToEdit ? 'Guardar' : 'Crear usuario'}</button>
+                <div className="flex gap-4 justify-center py-3 w-full px-2">
+                    <button className="bg-white dark:bg-slate-500 dark:text-slate-300 w-full py-1 rounded cursor-pointer" type="button" onClick={cancelUser}>Cancelar</button>
+                    <button className="bg-white dark:bg-slate-500 dark:text-slate-300 w-full py-1 rounded cursor-pointer" type="submit">{userToEdit ? 'Guardar' : 'Crear usuario'}</button>
+                </div>
             </div>
         </form>
     </div>

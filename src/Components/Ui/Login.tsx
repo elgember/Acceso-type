@@ -68,17 +68,17 @@ export const Login = () => {
     }
 
     return (
-    <div className="mt-4 w-full">
-        <h3 className="p-2 text-center">Iniciar Sesion</h3>
-        <div className="flex justify-center gap-2 w-full px-2">
+    <div className="mt-4 w-full h-full">
+        <h3 className="p-4 text-center">Iniciar Sesion</h3>
+        <div className="flex justify-center flex-col sm:flex-row gap-3 w-full px-2">
             <div>
-                <button className="w-40 bg-red-500 py-1 rounded" onClick={loginAdmin}>Iniciar como Admin</button>
+                <button className="w-full sm:w-40 px-2 bg-red-500 py-1 rounded" onClick={loginAdmin}>Iniciar como Admin</button>
             </div>
             <div>
-                <button className="w-40 bg-[#48e] py-1 rounded" onClick={loginGuest}>Iniciar como Guest</button>
+                <button className="w-full sm:w-40 px-2 bg-[#48e] py-1 rounded" onClick={loginGuest}>Iniciar como Guest</button>
             </div>
             <div>
-                <button className="w-40 bg-green-500 py-1 rounded" onClick={loginEditor}>Iniciar como Editor</button>
+                <button className="w-full sm:w-40 px-2 bg-green-500 py-1 rounded" onClick={loginEditor}>Iniciar como Editor</button>
             </div>
         </div>
     </div>

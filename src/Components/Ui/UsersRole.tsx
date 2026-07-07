@@ -23,16 +23,3 @@ export const UsersRole = ({ filterRole, setFilterRole, setCurrentPage }: UsersRo
     </div>
     )
 }
-
-/*
-{[
-                    { id: 'all', label: 'todos'},
-                    { id: 'admin', label: 'administradores'},
-                    { id: 'editor', label: 'editores'},
-                    { id: 'guest', label: 'invitados'},
-                ].map((tab) => (
-                    <button key={tab.id} onClick={() => { setFilterRole(tab.id as UserRole | 'all'); setCurrentPage(1)}} className={`px-4 py-2 w-full rounded cursor-pointer ${filterRole === tab.id ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                        {tab.label}
-                    </button>
-                ))}
-*/

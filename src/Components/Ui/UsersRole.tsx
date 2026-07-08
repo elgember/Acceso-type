@@ -9,7 +9,7 @@ interface UsersRoleProps {
 
 export const UsersRole = ({ filterRole, setFilterRole, setCurrentPage }: UsersRoleProps) => {
     return (
-    <div className="flex w-full md:max-w-5xl">
+    <div className="flex justify-center w-full sm:max-w-5xl">
         {[
             { id: 'all', label: 'Todos'},
             { id: 'admin', label: 'Administradores'},

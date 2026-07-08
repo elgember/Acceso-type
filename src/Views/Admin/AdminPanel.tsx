@@ -86,6 +86,7 @@ export const AdminPanel = () => {
                 .update({
                     name: data.name,
                     email: data.email,
+                    username: data.username,
                     role: data.role
                 })
                 .eq('id', userToDelete.id);
@@ -103,6 +104,7 @@ export const AdminPanel = () => {
                     .insert([{ 
                         name: data.name,
                         email: data.email,
+                        username: data.username,
                         role: data.role
                     }])
                     .select()

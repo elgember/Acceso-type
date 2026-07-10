@@ -131,7 +131,7 @@ export const AdminPanel = () => {
     } 
 
     return (
-    <div className='w-full min-h-screen dark:bg-[#333] dark:text-white relative'>
+    <div className='w-full min-h-full dark:bg-[#333] dark:text-white relative'>
         <div className='text-center'>
             <h2>Admin Panel</h2>
             <p>Gestion de usuarios y configuraciones</p>

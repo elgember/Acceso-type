@@ -1,86 +1,87 @@
-import { authContext } from "@/Context/AuthContext";
+import { useAuth } from "@/Hooks/UserAuth";
 import { User } from "@/interfaces/user_interface";
-import { useState } from "react";
+import { supabase } from "@/superbaseCliente";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
 
-    const {login} = authContext();
+    interface loginProps {
+        onLoginSuccess: () => void;
+    }
+
+export const Login = ({ onLoginSuccess }: loginProps) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+    const { login } = useAuth();
 
-    const loginAdmin = () => {
-        const token = 'ehh17366ebdbh722933g4h4h72h';
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
 
-        const adminData: User = {
-            id: 1,
-            name: 'Alice Dev',
-            username: 'Alice Dev',
-            role: 'admin',
-            backendAccess: true,
-            permissions: ['read', 'write', 'delete'],
-            login: 'alice_dev',
-            avatar_url: 'https://example.com/avatar.jpg',
-            html_url: 'https://example.com/alice_dev',
-            type: 'User',
-            email: 'alice.dev@example.com'
-        } 
+    //se hace la peticion ala base de datos
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+
+    if(error) {
+        setError('Correo o contraseña incorrecta. Intenta de nuevo');
+        setLoading(false);
+        return;
+
+    }
+    if (data.session) {
+        const currentToken = data.session.access_token;
+        const { data: dbUser, error: dbError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single();
+
+            if ( dbError || !dbUser ) {
+                setError('no se encuentra perfil de usuario');
+                setLoading(false);
+                return;
+            }
+            
+            if (login) {
+                login(currentToken, dbUser as User);
         
-        login (token, adminData);
-    }
-
-    const loginGuest = () => {
-        const token = 'ehh17366ebdbh722933g4h4h72h';
-
-        const guestData: User = {
-            id: 2,
-            name: 'Bob guest',                                  
-            username: 'Bob guest',
-            role: 'guest',
-            trialPeriod: 30,
-            login: 'bob_guest',
-            avatar_url: 'https://example.com/avatar.jpg',
-            html_url: 'https://example.com/bob_guest',
-            type: 'User',
-            email: 'bob.guest@example.com'
         }
-
-        login(token, guestData);
+        navigate('/', { replace: true});
+    } 
+        setLoading(false);
     }
-
-    const loginEditor = () => {
-        const token = 'ehh17366ebdbh722933g4h4h72h';
-
-        const editorData: User = {
-            id: 3,
-            name: 'Charlie Editor',
-            username: 'Charlie Editor',
-            role: 'editor',
-            canEdit: true,
-            login: 'charlie_editor',
-            avatar_url: 'https://example.com/avatar.jpg',
-            html_url: 'https://example.com/charlie_editor',
-            type: 'User',
-            email: 'charlie.editor@example.com'
-        }
-
-        login(token, editorData);
-    }
-
+    
     return (
     <div className="mt-4 w-full h-full">
-        <h3 className="p-4 text-center">Iniciar Sesion</h3>
-        <div className="flex justify-center flex-col sm:flex-row gap-3 w-full px-2">
+        <div>
+            <h2 className="font-semibold mb-2">Iniciar Sesion</h2>
             <div>
-                <button className="w-full sm:w-40 px-2 bg-red-500 py-1 rounded" onClick={loginAdmin}>Iniciar como Admin</button>
+                { error && (
+                   <p className="text-red-500">
+                    {error}
+                   </p>
+                )}
             </div>
-            <div>
-                <button className="w-full sm:w-40 px-2 bg-[#48e] py-1 rounded" onClick={loginGuest}>Iniciar como Guest</button>
-            </div>
-            <div>
-                <button className="w-full sm:w-40 px-2 bg-green-500 py-1 rounded" onClick={loginEditor}>Iniciar como Editor</button>
-            </div>
+            <form onSubmit={handleLogin} className="flex flex-col items-center gap-2">
+                <div className="flex flex-col items-center w-full">
+                    <label className='font-extralight pl-2' htmlFor="email">Ingresa tu correo electronico</label>
+                    <input className="bg-[#eee] w-full sm:w-lg py-1 px-2 rounded-lg" type="text" value={email} id="email" placeholder="tuCorreo@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="flex flex-col w-full items-center">
+                    <label className="font-extralight pl-2" htmlFor="password">Ingresa tu password</label>
+                    <input className="bg-[#eee] w-full sm:w-lg py-1 px-2 rounded-lg" type="text" value={password} id="password" placeholder="Tu contraseña" onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <button className="bg-[#49f] w-35 rounded-lg py-1 mt-2 text-white cursor-pointer" disabled={loading} type="submit">{loading ? 'Verificando...' : 'Entrar al panel'}</button>
+            </form>
         </div>
     </div>
-    )
+ )
 }

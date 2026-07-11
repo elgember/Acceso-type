@@ -5,11 +5,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-    interface loginProps {
-        onLoginSuccess: () => void;
-    }
-
-export const Login = ({ onLoginSuccess }: loginProps) => {
+export const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

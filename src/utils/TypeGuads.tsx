@@ -2,7 +2,7 @@ import { AdminUser, type User } from '../interfaces/user_interface';
 
 export function isAdmin(user: User): user is AdminUser {
     // Type guard to check if the user is an AdminUser
-    return user.role === 'admin' && 'backendAccess' in user;
+    return user.role === 'admin';
 }
 
 export const getAuthorizedAdmins = (data: User[]): string[] => {
